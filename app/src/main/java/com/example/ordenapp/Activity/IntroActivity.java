@@ -26,7 +26,7 @@ ActivityIntroBinding binding;
         binding.btnLogin.setOnClickListener(v -> {
 
         });
-//test
+
         binding.btnRegister.setOnClickListener(v ->{
 
         });
