@@ -44,4 +44,5 @@ dependencies {
     androidTestImplementation libs.espresso.core
     implementation libs.gson
     implementation libs.firebase.auth
+    implementation libs.glide
 }
