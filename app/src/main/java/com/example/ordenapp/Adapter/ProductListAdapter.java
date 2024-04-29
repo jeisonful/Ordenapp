@@ -32,7 +32,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     @Override
     public ProductListAdapter.viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
-        View inflate = LayoutInflater.from(context).inflate(R.layout.viewholder_list_product, parent, false);
+        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_list_product, parent, false);
         return new viewholder(inflate);
     }
 
@@ -47,11 +47,11 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                 .transform(new CenterCrop(), new RoundedCorners(30))
                 .into(holder.pic);
 
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent=new Intent(context, DetailActivity.class);
-            //intent.putExtra("object",items.get(position));
-            context.startActivity(intent);
-        });
+       // holder.itemView.setOnClickListener(v -> {
+         //   Intent intent=new Intent(context, DetailActivity.class);
+       //     intent.putExtra("object", items.get(position));
+        //    context.startActivity(intent);
+       // });
     }
 
     @Override
@@ -65,7 +65,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
         public viewholder(@NonNull View itemView) {
             super(itemView);
-
+            rateTxt = itemView.findViewById(R.id.rateTxt);
             titleTxt = itemView.findViewById(R.id.titleTxt);
             priceTxt = itemView.findViewById(R.id.priceTxt);
             pic = itemView.findViewById(R.id.img);

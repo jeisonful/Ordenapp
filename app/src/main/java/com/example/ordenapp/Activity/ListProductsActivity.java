@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ordenapp.Adapter.BestProductsAdapter;
 import com.example.ordenapp.Adapter.ProductListAdapter;
 import com.example.ordenapp.Domain.Products;
 import com.example.ordenapp.R;
@@ -26,9 +27,7 @@ import java.util.ArrayList;
 
 public class ListProductsActivity extends BaseActivity {
     ActivityListProductsBinding binding;
-    private RecyclerView.Adapter adapterListProduct;
     private int categoryId;
-    private String categoryName;
     private String searchText;
     private boolean isSearch;
     @Override
@@ -46,7 +45,7 @@ public class ListProductsActivity extends BaseActivity {
     }
 
     private void initList() {
-        DatabaseReference myRef = database.getReference("Foods");
+        DatabaseReference myRef = database.getReference("Product");
         binding.progressBar.setVisibility(View.VISIBLE);
         ArrayList<Products> list = new ArrayList<>();
 
@@ -63,10 +62,11 @@ public class ListProductsActivity extends BaseActivity {
                     for (DataSnapshot issue : snapshot.getChildren()) {
                         list.add(issue.getValue(Products.class));
                     }
-                    if (list.size() > 0) {
+                    if (!list.isEmpty()) {
                         binding.productListView.setLayoutManager(new GridLayoutManager(ListProductsActivity.this, 2));
-                        adapterListProduct = new ProductListAdapter(list);
-                        binding.productListView.setAdapter(adapterListProduct);
+                        RecyclerView.Adapter<ProductListAdapter.viewholder> adapter = new ProductListAdapter(list);
+                        binding.productListView.setAdapter(adapter);
+
                     }
                     binding.progressBar.setVisibility(View.GONE);
                 }
@@ -80,8 +80,8 @@ public class ListProductsActivity extends BaseActivity {
     }
 
     private void getIntentExtra() {
-        categoryId = getIntent().getIntExtra("CategoryId", 0);
-        categoryName = getIntent().getStringExtra("CategoryName");
+        categoryId = getIntent().getIntExtra("Id", 0);
+        String categoryName = getIntent().getStringExtra("Name");
         searchText = getIntent().getStringExtra("text");
         isSearch = getIntent().getBooleanExtra("isSearch", false);
 

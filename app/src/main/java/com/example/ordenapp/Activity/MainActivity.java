@@ -45,7 +45,7 @@ private ActivityMainBinding binding;
                     for (DataSnapshot issue : snapshot.getChildren()) {
                         list.add(issue.getValue(Products.class));
                     }
-                    if (list.size() > 0) {
+                    if (!list.isEmpty()) {
                         binding.bestProductsView.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false));
                         RecyclerView.Adapter<BestProductsAdapter.viewholder> adapter = new BestProductsAdapter(list);
                         binding.bestProductsView.setAdapter(adapter);
@@ -73,9 +73,9 @@ private ActivityMainBinding binding;
                     for (DataSnapshot issue : snapshot.getChildren()) {
                         list.add(issue.getValue(Category.class));
                     }
-                    if (list.size() > 0) {
+                    if (!list.isEmpty()) {
                         binding.categoryView.setLayoutManager(new GridLayoutManager(MainActivity.this, 4));
-                        RecyclerView.Adapter adapter = new CategoryAdapter(list);
+                        RecyclerView.Adapter<CategoryAdapter.viewholder> adapter = new CategoryAdapter(list);
                         binding.categoryView.setAdapter(adapter);
                     }
                     binding.progressBarCategory.setVisibility(View.GONE);

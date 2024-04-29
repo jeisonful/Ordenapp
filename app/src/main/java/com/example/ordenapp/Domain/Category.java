@@ -1,7 +1,7 @@
 package com.example.ordenapp.Domain;
 
 public class Category {
-    private int id;
+    private int Id;
     private String ImagePath;
     private String Name;
 
@@ -9,11 +9,11 @@ public class Category {
     }
 
     public int getId() {
-        return id;
+        return Id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int Id) {
+        this.Id = Id;
     }
 
     public String getImagePath() {

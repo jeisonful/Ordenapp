@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,8 +62,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.viewho
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ListProductsActivity.class);
-            intent.putExtra("CategoryId", items.get(position).getId());
-            intent.putExtra("CategoryName", items.get(position).getName());
+            intent.putExtra("Id", items.get(position).getId());
+            intent.putExtra("Name", items.get(position).getName());
             context.startActivity(intent);
         });
     }
