@@ -1,6 +1,8 @@
 package com.example.ordenapp.Domain;
 
-public class Products {
+import java.io.Serializable;
+
+public class Products implements Serializable {
     private int CategoryId;
     private String Description;
     private boolean BestProduct;

@@ -1,5 +1,6 @@
 package com.example.ordenapp.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -13,6 +14,7 @@ import com.example.ordenapp.Adapter.CategoryAdapter;
 import com.example.ordenapp.Domain.Category;
 import com.example.ordenapp.Domain.Products;
 import com.example.ordenapp.databinding.ActivityMainBinding;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +33,24 @@ private ActivityMainBinding binding;
 
         initBestProduct();
         initCategory();
+        setVariable();
+    }
+
+    private void setVariable() {
+        binding.btnLogout.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        });
+
+        binding.btnBuscar.setOnClickListener(v -> {
+            String text = binding.buscarTxt.getText().toString();
+            if (!text.isEmpty()) {
+                Intent intent = new Intent(MainActivity.this, ListProductsActivity.class);
+                intent.putExtra("text", text);
+                intent.putExtra("isSearch", true);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initBestProduct() {

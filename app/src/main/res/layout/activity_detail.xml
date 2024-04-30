@@ -34,14 +34,14 @@
 
                 <ImageView
                     android:id="@+id/favBtn"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_marginEnd="8dp"
 
                     app:layout_constraintBottom_toBottomOf="@+id/pic"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/pic"
-                    app:srcCompat="@mipmap/favorite_white" />
+                    app:srcCompat="@mipmap/favorite" />
 
                 <ImageView
                     android:id="@+id/backBtn"
@@ -51,7 +51,7 @@
                     android:layout_marginTop="24dp"
                     android:padding="8dp"
 
-                    app:tint="@color/white"
+                    app:tint="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@mipmap/arrow" />
@@ -110,7 +110,7 @@
                     android:id="@+id/rateTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5 Rating"
+                    android:text="5"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/ratingBar"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -123,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="Details"
+                android:text="Descripción"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -154,7 +154,7 @@ onions."
                     android:id="@+id/textView20"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Quantity"
+                    android:text="Cantidad"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -223,12 +223,12 @@ onions."
             style="@android:style/Widget.Button"
             android:background="@drawable/blue_button_background"
             android:textColor="@color/white"
-            android:textSize="20sp"
-            android:drawableStart="@mipmap/cart_icon"
+            android:textSize="18sp"
+            android:drawableStart="@drawable/cart_icon"
             android:paddingStart="16dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
-            android:text="Add to cart"
+            android:text="Agregar al carrito"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -238,7 +238,7 @@ onions."
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:text="Total Price"
+            android:text="Precio Total"
             android:textSize="16sp"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"

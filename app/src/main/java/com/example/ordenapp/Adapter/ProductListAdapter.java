@@ -47,11 +47,11 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                 .transform(new CenterCrop(), new RoundedCorners(30))
                 .into(holder.pic);
 
-       // holder.itemView.setOnClickListener(v -> {
-         //   Intent intent=new Intent(context, DetailActivity.class);
-       //     intent.putExtra("object", items.get(position));
-        //    context.startActivity(intent);
-       // });
+       holder.itemView.setOnClickListener(v -> {
+         Intent intent=new Intent(context, DetailActivity.class);
+       intent.putExtra("object", items.get(position));
+         context.startActivity(intent);
+        });
     }
 
     @Override
