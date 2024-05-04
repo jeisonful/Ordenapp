@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".Activity.RegisterActivity"
     android:orientation="horizontal">
 
@@ -47,12 +47,25 @@
                     android:textSize="45sp"
                     android:text="App" />
             </LinearLayout>
-
+            <EditText
+                android:id="@+id/nombreTxt"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:hint="Nombre Completo"
+                android:textAlignment="center"
+                android:textColorHint="@color/black"
+                android:textSize="16sp"
+                android:ems="10"
+                android:background="@drawable/edittext_background"
+                android:inputType="text" />
             <EditText
                 android:id="@+id/emailTxt"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginStart="32dp"
                 android:hint="Correo Electrónico"
@@ -105,14 +118,28 @@
                 android:textStyle="bold"
                 />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
             <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
+                android:id="@+id/TextView66"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="¿Ya tienes una cuenta? Inicia Sesión"
-                android:textAlignment="center"
+                android:text="¿Ya tienes una cuenta? "
                 android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/btnLoguearme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Iniciar Sesión"
+                android:textSize="16sp"
+                android:textColor="@color/blue"/>
+
+        </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

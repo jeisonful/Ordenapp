@@ -1,8 +1,12 @@
 package com.example.ordenapp.Activity;
 
+import static android.text.TextUtils.lastIndexOf;
+
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -13,15 +17,19 @@ import com.example.ordenapp.Adapter.BestProductsAdapter;
 import com.example.ordenapp.Adapter.CategoryAdapter;
 import com.example.ordenapp.Domain.Category;
 import com.example.ordenapp.Domain.Products;
+import com.example.ordenapp.Domain.User;
 import com.example.ordenapp.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MainActivity extends BaseActivity {
 private ActivityMainBinding binding;
@@ -30,13 +38,47 @@ private ActivityMainBinding binding;
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        getUserData();
         initBestProduct();
         initCategory();
         setVariable();
     }
 
+    private void getUserData() {
+        String name = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
+        String userEmail = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail();
+        DatabaseReference myRef = database.getReference("User");
+
+        Query query = myRef.orderByChild("Email").equalTo(userEmail);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+                    String caracter = String.valueOf(dataSnapshot.getValue());
+                    int position = caracter.lastIndexOf("Rank=")+5;
+                    String rankValue = String.valueOf(caracter.charAt(position));
+                    if(rankValue.equals("0")){
+                        binding.btnAdmin.setVisibility(View.GONE);
+                    }else{
+                        binding.btnAdmin.setVisibility(View.VISIBLE);
+                    }
+                }catch (Throwable e){
+                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(), databaseError.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        binding.userLoggedName.setText(name);
+    }
+
+
     private void setVariable() {
+
         binding.btnLogout.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));

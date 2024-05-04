@@ -28,6 +28,11 @@ public class LoginActivity extends BaseActivity {
         setVariable();
     }
     private void setVariable() {
+        binding.btnRegistrarme.setOnClickListener(v -> {
+            startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+        });
+
+
         binding.btnLogin.setOnClickListener(v->{
             String email = binding.emailTxt.getText().toString();
             String password = binding.passwordTxt.getText().toString();
