@@ -38,6 +38,7 @@ private ActivityMainBinding binding;
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.userLoggedName.setText(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName());
         getUserData();
         initBestProduct();
         initCategory();
@@ -53,7 +54,6 @@ private ActivityMainBinding binding;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
-                    binding.userLoggedName.setText(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName());
                     String caracter = String.valueOf(dataSnapshot.getValue());
                     int position = caracter.lastIndexOf("Rank=")+5;
                     String rankValue = String.valueOf(caracter.charAt(position));
@@ -150,6 +150,4 @@ private ActivityMainBinding binding;
             }
         });
     }
-
-
 }

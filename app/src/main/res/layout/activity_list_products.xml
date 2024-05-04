@@ -31,7 +31,7 @@
 
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@mipmap/arrow" />
+                    app:srcCompat="@drawable/back_btn" />
 
                 <TextView
                     android:id="@+id/titleTxt"

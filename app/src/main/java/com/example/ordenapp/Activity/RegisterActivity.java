@@ -1,34 +1,16 @@
 package com.example.ordenapp.Activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
-
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-import com.example.ordenapp.R;
 import com.example.ordenapp.databinding.ActivityRegisterBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.Firebase;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,31 +53,24 @@ ActivityRegisterBinding binding;
                 public void onSuccess(AuthResult authResult) {
                     FirebaseUser firebaseUser = authResult.getUser();
                     if (firebaseUser != null) {
-                        // Prepare user data map
                         Map<String, Object> userData = new HashMap<>();
-                        userData.put("Name", nombre);  // Assuming 'nombre' is defined and valid
-                        userData.put("Email", email);  // Assuming 'email' is defined and valid
-                        userData.put("Password", password);  // Be cautious with storing passwords in plain text
-                        userData.put("Rank", 0);  // Default rank
+                        userData.put("Name", nombre);
+                        userData.put("Email", email);
+                        userData.put("Password", password);
+                        userData.put("Rank", 0);
 
-                        // Update the child data at once
                         DatabaseReference userRef = databaseReference.child("User").child(firebaseUser.getUid());
                         userRef.updateChildren(userData)
                                 .addOnSuccessListener(aVoid -> {
-                                    // Successfully updated user information
                                     UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
                                             .setDisplayName(nombre)
                                             .build();
                                     firebaseUser.updateProfile(profileUpdate);
 
-                                    // Notify user
                                     Toast.makeText(RegisterActivity.this, "Te has registrado correctamente.", Toast.LENGTH_SHORT).show();
-
-                                    // Start the next activity
                                     startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                                 })
                                 .addOnFailureListener(e -> {
-                                    // Handle failure
                                     Toast.makeText(RegisterActivity.this, "Failed to update user data: " + e.getMessage(), Toast.LENGTH_LONG).show();
                                 });
                     } else {
@@ -103,7 +78,6 @@ ActivityRegisterBinding binding;
                     }
                 }
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    // Handle possible errors more appropriately here
                     Toast.makeText(RegisterActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
