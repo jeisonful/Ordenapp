@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import com.example.ordenapp.databinding.ActivityIntroBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class IntroActivity extends BaseActivity {
 ActivityIntroBinding binding;
@@ -28,6 +29,7 @@ ActivityIntroBinding binding;
         });
 
         binding.btnRegister.setOnClickListener(v ->{
+            FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(IntroActivity.this, RegisterActivity.class));
         });
     }

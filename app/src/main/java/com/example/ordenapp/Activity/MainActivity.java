@@ -45,7 +45,6 @@ private ActivityMainBinding binding;
     }
 
     private void getUserData() {
-        String name = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
         String userEmail = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail();
         DatabaseReference myRef = database.getReference("User");
 
@@ -54,6 +53,7 @@ private ActivityMainBinding binding;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
+                    binding.userLoggedName.setText(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName());
                     String caracter = String.valueOf(dataSnapshot.getValue());
                     int position = caracter.lastIndexOf("Rank=")+5;
                     String rankValue = String.valueOf(caracter.charAt(position));
@@ -73,7 +73,7 @@ private ActivityMainBinding binding;
         });
 
 
-        binding.userLoggedName.setText(name);
+
     }
 
 

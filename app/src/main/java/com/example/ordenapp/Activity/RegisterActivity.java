@@ -29,6 +29,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class RegisterActivity extends BaseActivity {
 ActivityRegisterBinding binding;
     @Override
@@ -66,29 +69,42 @@ ActivityRegisterBinding binding;
             mAuth.createUserWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                 @Override
                 public void onSuccess(AuthResult authResult) {
-                    databaseReference.child("User").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            databaseReference.child("User").child(currentFirebaseUser.getUid()).child("Name").setValue(nombre);
-                                databaseReference.child("User").child(currentFirebaseUser.getUid()).child("Email").setValue(email);
-                                databaseReference.child("User").child(currentFirebaseUser.getUid()).child("Password").setValue(password);
-                                databaseReference.child("User").child(currentFirebaseUser.getUid()).child("Rank").setValue(0);
-                                Toast.makeText(RegisterActivity.this,"Te has registrado correctamente.",Toast.LENGTH_SHORT).show();
-                            UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder()
-                                    .setDisplayName(nombre)
-                                    .build();
-                            FirebaseUser firebaseUser = authResult.getUser();
-                            assert firebaseUser != null;
-                            firebaseUser.updateProfile(userProfileChangeRequest);
-                            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                    FirebaseUser firebaseUser = authResult.getUser();
+                    if (firebaseUser != null) {
+                        // Prepare user data map
+                        Map<String, Object> userData = new HashMap<>();
+                        userData.put("Name", nombre);  // Assuming 'nombre' is defined and valid
+                        userData.put("Email", email);  // Assuming 'email' is defined and valid
+                        userData.put("Password", password);  // Be cautious with storing passwords in plain text
+                        userData.put("Rank", 0);  // Default rank
 
-                        }
-                    });
+                        // Update the child data at once
+                        DatabaseReference userRef = databaseReference.child("User").child(firebaseUser.getUid());
+                        userRef.updateChildren(userData)
+                                .addOnSuccessListener(aVoid -> {
+                                    // Successfully updated user information
+                                    UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
+                                            .setDisplayName(nombre)
+                                            .build();
+                                    firebaseUser.updateProfile(profileUpdate);
 
+                                    // Notify user
+                                    Toast.makeText(RegisterActivity.this, "Te has registrado correctamente.", Toast.LENGTH_SHORT).show();
 
+                                    // Start the next activity
+                                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                                })
+                                .addOnFailureListener(e -> {
+                                    // Handle failure
+                                    Toast.makeText(RegisterActivity.this, "Failed to update user data: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                });
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "Registration failed: User is null", Toast.LENGTH_LONG).show();
+                    }
+                }
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    // Handle possible errors more appropriately here
+                    Toast.makeText(RegisterActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
         }
