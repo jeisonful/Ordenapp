@@ -1,9 +1,14 @@
 package com.example.ordenapp.Helper;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
 
+import com.example.ordenapp.Activity.CartActivity;
+import com.example.ordenapp.Activity.MainActivity;
 import com.example.ordenapp.Domain.Products;
 
 import java.util.ArrayList;
@@ -23,7 +28,7 @@ public class ManagmentCart {
         boolean existAlready = false;
         int n = 0;
         for (int i = 0; i < listpop.size(); i++) {
-            if (listpop.get(i).getTitle().equals(item.getTitle())) {
+            if (listpop.get(i).getId()==(item.getId())) {
                 existAlready = true;
                 n = i;
                 break;
@@ -64,4 +69,10 @@ public class ManagmentCart {
         tinyDB.putListObject("CartList",listItem);
         changeNumberItemsListener.change();
     }
+
+    public void clearCart() {
+        tinyDB.remove("CartList");
+        Toast.makeText(context, "Orden realizada con éxito", Toast.LENGTH_SHORT).show();
+    }
+
 }

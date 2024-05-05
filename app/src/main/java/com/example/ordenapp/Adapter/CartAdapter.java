@@ -1,11 +1,15 @@
 package com.example.ordenapp.Adapter;
 
+import static android.app.ProgressDialog.show;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,13 +17,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.example.ordenapp.Activity.CartActivity;
 import com.example.ordenapp.Domain.Products;
 import com.example.ordenapp.Helper.ChangeNumberItemsListener;
 import com.example.ordenapp.Helper.ManagmentCart;
 import com.example.ordenapp.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewholder> {
     ArrayList<Products> list;
@@ -53,20 +62,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewholder> {
                 .transform(new CenterCrop(), new RoundedCorners(30))
                 .into(holder.pic);
 
-        holder.plusItem.setOnClickListener(v -> {
-            managmentCart.plusNumberItem(list, position, () -> {
-                notifyDataSetChanged();
-                changeNumberItemsListener.change();
-            });
-        });
+        holder.plusItem.setOnClickListener(v -> managmentCart.plusNumberItem(list, position, () -> {
+            notifyDataSetChanged();
+            changeNumberItemsListener.change();
+        }));
 
-        holder.minusItem.setOnClickListener(v -> {
-            managmentCart.minusNumberItem(list, position, () -> {
-                notifyDataSetChanged();
-                changeNumberItemsListener.change();
-            });
-        });
-
+        holder.minusItem.setOnClickListener(v -> managmentCart.minusNumberItem(list, position, () -> {
+            notifyDataSetChanged();
+            changeNumberItemsListener.change();
+        }));
 
     }
 
@@ -78,11 +82,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewholder> {
     public class viewholder extends RecyclerView.ViewHolder{
         TextView title, feeEachItem, plusItem, minusItem;
         ImageView pic;
+        Button placeOrder;
         TextView totalEachItem, num;
         public viewholder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.titleTxt);
             pic = itemView.findViewById(R.id.pic);
+            placeOrder = itemView.findViewById(R.id.placeOrder);
             feeEachItem = itemView.findViewById(R.id.feeEachItem);
             plusItem = itemView.findViewById(R.id.plusCartBtn);
             minusItem = itemView.findViewById(R.id.minusCartBtn);
@@ -91,4 +97,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewholder> {
 
         }
     }
+
+    public ArrayList<Products> getProductList() {
+        return list;
+    }
+
 }
+
