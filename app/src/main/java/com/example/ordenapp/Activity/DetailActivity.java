@@ -1,9 +1,11 @@
 package com.example.ordenapp.Activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
 import com.example.ordenapp.Domain.Products;
+import com.example.ordenapp.Helper.ManagmentCart;
 import com.example.ordenapp.R;
 import com.example.ordenapp.databinding.ActivityDetailBinding;
 
@@ -11,6 +13,7 @@ public class DetailActivity extends BaseActivity {
     ActivityDetailBinding binding;
     private Products object;
     private int num = 1;
+    private ManagmentCart managmentCart;
 
 
     @Override
@@ -18,6 +21,7 @@ public class DetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        getWindow().getDecorView().setBackgroundColor(Color.WHITE);
         getWindow().setStatusBarColor(getResources().getColor(R.color.black));
 
         getIntentExtra();
@@ -25,6 +29,7 @@ public class DetailActivity extends BaseActivity {
     }
 
     private void setVariable() {
+        managmentCart = new ManagmentCart(this);
         binding.backBtn.setOnClickListener(v->{
             finish();
         });
@@ -51,6 +56,11 @@ public class DetailActivity extends BaseActivity {
                 binding.numTxt.setText(num+"");
                 binding.totalTxt.setText("$"+(num*object.getPrice()));
             }
+        });
+
+        binding.addBtn.setOnClickListener(v -> {
+            object.setNumberInCart(num);
+            managmentCart.insertProduct(object);
         });
     }
 

@@ -14,6 +14,7 @@ ActivityIntroBinding binding;
         super.onCreate(savedInstanceState);
         binding = ActivityIntroBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 
         setVariable();
         getWindow().setStatusBarColor(Color.parseColor("#4682B4"));

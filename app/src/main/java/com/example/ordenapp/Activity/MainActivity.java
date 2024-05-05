@@ -3,6 +3,7 @@ package com.example.ordenapp.Activity;
 import static android.text.TextUtils.lastIndexOf;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -38,6 +39,7 @@ private ActivityMainBinding binding;
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        getWindow().getDecorView().setBackgroundColor(Color.WHITE);
         binding.userLoggedName.setText(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName());
         getUserData();
         initBestProduct();
@@ -93,6 +95,8 @@ private ActivityMainBinding binding;
                 startActivity(intent);
             }
         });
+
+        binding.btnCarrito.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CartActivity.class)));
     }
 
     private void initBestProduct() {

@@ -1,5 +1,6 @@
 package com.example.ordenapp.Activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
@@ -35,6 +36,7 @@ public class ListProductsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityListProductsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        getWindow().getDecorView().setBackgroundColor(Color.WHITE);
         getIntentExtra();
         initList();
         setVariable();

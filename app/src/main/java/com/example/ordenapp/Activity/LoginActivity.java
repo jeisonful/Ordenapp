@@ -1,6 +1,7 @@
 package com.example.ordenapp.Activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        getWindow().getDecorView().setBackgroundColor(Color.WHITE);
         setVariable();
     }
     private void setVariable() {

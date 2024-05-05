@@ -1,6 +1,7 @@
 package com.example.ordenapp.Activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ ActivityRegisterBinding binding;
         super.onCreate(savedInstanceState);
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        getWindow().getDecorView().setBackgroundColor(Color.WHITE);
         setVariable();
     }
 
