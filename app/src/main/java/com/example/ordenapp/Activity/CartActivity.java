@@ -91,6 +91,7 @@ private ManagmentCart managmentCart;
         });
     }
     private void saveOrderToFirebase() {
+        final int[] getTotalItems = {0};
         ArrayList<Products> productList = ((CartAdapter) adapter).getProductList();
         DatabaseReference ordersCounterRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://ordenapp-3184b-default-rtdb.firebaseio.com/ordersCounter");
         ordersCounterRef.runTransaction(new Transaction.Handler() {
@@ -126,6 +127,8 @@ private ManagmentCart managmentCart;
                             productData.put("Id", orderCounter);
                             productData.put("ProductID", product.getId());
                             productData.put("Quantity", product.getNumberInCart());
+                            getTotalItems[0] += product.getNumberInCart();
+
 
                             assert orderId != null;
                             ordersRef.child(orderId).setValue(productData);
@@ -136,6 +139,7 @@ private ManagmentCart managmentCart;
                         orderDetails.put("UserID", currentFirebaseUser);
                         orderDetails.put("ShippingAddress", "Testing");
                         orderDetails.put("Status", "pending");
+                        orderDetails.put("ItemsQuantity", getTotalItems[0]);
                         orderDetails.put("Total", total);
                         orderDetailsRef.setValue(orderDetails);
 
@@ -149,6 +153,4 @@ private ManagmentCart managmentCart;
             }
         });
     }
-
-
 }

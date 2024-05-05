@@ -46,7 +46,6 @@ public class ManagmentCart {
     public ArrayList<Products> getListCart() {
         return tinyDB.getListObject("CartList");
     }
-
     public Double getTotalFee(){
         ArrayList<Products> listItem=getListCart();
         double fee=0;
