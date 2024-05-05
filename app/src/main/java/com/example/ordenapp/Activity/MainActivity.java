@@ -81,6 +81,10 @@ private ActivityMainBinding binding;
 
     private void setVariable() {
 
+        binding.btnAdmin.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, AdminActivity.class));
+        });
+
         binding.btnLogout.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));

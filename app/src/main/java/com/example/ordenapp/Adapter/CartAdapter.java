@@ -18,12 +18,14 @@ import com.example.ordenapp.Helper.ChangeNumberItemsListener;
 import com.example.ordenapp.Helper.ManagmentCart;
 import com.example.ordenapp.R;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewholder> {
     ArrayList<Products> list;
     private ManagmentCart managmentCart;
     ChangeNumberItemsListener changeNumberItemsListener;
+
 
     public CartAdapter(ArrayList<Products> list, Context context, ChangeNumberItemsListener changeNumberItemsListener) {
         this.list = list;
@@ -40,7 +42,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewholder> {
 
     @Override
     public void onBindViewHolder(@NonNull CartAdapter.viewholder holder, int position) {
-
         holder.title.setText(list.get(position).getTitle());
         holder.feeEachItem.setText("$"+(list.get(position).getNumberInCart()*list.get(position).getPrice()));
         holder.totalEachItem.setText(list.get(position).getNumberInCart()+" * $"+(

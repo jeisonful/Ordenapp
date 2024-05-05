@@ -18,11 +18,14 @@ import com.example.ordenapp.Helper.ManagmentCart;
 import com.example.ordenapp.R;
 import com.example.ordenapp.databinding.ActivityCartBinding;
 
+import java.text.DecimalFormat;
+
 public class CartActivity extends BaseActivity {
 private ActivityCartBinding binding;
 private RecyclerView.Adapter adapter;
 private ManagmentCart managmentCart;
-private double tax;
+
+    private double tax;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,13 +49,13 @@ private double tax;
         }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         binding.cardView.setLayoutManager(linearLayoutManager);
-        adapter = new CartAdapter(managmentCart.getListCart(), this, () -> calculateCart());
+        adapter = new CartAdapter(managmentCart.getListCart(), this, this::calculateCart);
         binding.cardView.setAdapter(adapter);
     }
 
     private void calculateCart() {
         double percentTax = 0.18; // percent 18% tax itbis
-        double delivery = 25; // pesos DOP
+        int delivery = 25; // pesos DOP
         tax = (double) Math.round(managmentCart.getTotalFee() * percentTax * 100.0) /100;
         double total = (double) Math.round((managmentCart.getTotalFee() + tax + delivery) * 100) /100;
         double itemTotal = (double) Math.round(managmentCart.getTotalFee() * 100) /100;
