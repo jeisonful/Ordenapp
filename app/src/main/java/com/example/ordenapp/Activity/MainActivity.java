@@ -1,10 +1,8 @@
 package com.example.ordenapp.Activity;
 
-import static android.text.TextUtils.lastIndexOf;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -18,14 +16,11 @@ import com.example.ordenapp.Adapter.BestProductsAdapter;
 import com.example.ordenapp.Adapter.CategoryAdapter;
 import com.example.ordenapp.Domain.Category;
 import com.example.ordenapp.Domain.Products;
-import com.example.ordenapp.Domain.User;
 import com.example.ordenapp.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
@@ -101,6 +96,7 @@ private ActivityMainBinding binding;
         });
 
         binding.btnCarrito.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CartActivity.class)));
+        binding.btnHistoryOrders.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, MyOrdersActivity.class)));
     }
 
     private void initBestProduct() {

@@ -30,8 +30,11 @@ import com.google.firebase.database.Transaction;
 import com.google.firebase.database.annotations.Nullable;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 
 public class CartActivity extends BaseActivity {
@@ -136,10 +139,14 @@ private ManagmentCart managmentCart;
 
                         DatabaseReference orderDetailsRef = FirebaseDatabase.getInstance().getReference("OrderDetails").child(orderCounter.toString());
                         HashMap<String, Object> orderDetails = new HashMap<>();
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+                        String currentDateandTime = sdf.format(new Date());
+                        orderDetails.put("Id", orderCounter);
                         orderDetails.put("UserID", currentFirebaseUser);
                         orderDetails.put("ShippingAddress", "Testing");
-                        orderDetails.put("Status", "pending");
+                        orderDetails.put("Status", "Pendiente");
                         orderDetails.put("ItemsQuantity", getTotalItems[0]);
+                        orderDetails.put("DateTime", currentDateandTime);
                         orderDetails.put("Total", total);
                         orderDetailsRef.setValue(orderDetails);
 

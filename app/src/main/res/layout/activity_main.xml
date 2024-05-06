@@ -46,12 +46,19 @@
                     android:id="@+id/btnAdmin"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:layout_marginStart="179dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/btnLogout"
-                    app:layout_constraintStart_toEndOf="@+id/userLoggedName"
+                    app:layout_constraintEnd_toStartOf="@+id/btnHistoryOrders"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@mipmap/admin_panel3_background" />
+
+                <ImageView
+                    android:id="@+id/btnHistoryOrders"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnLogout"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/historyorders" />
 
                 <ImageView
                     android:id="@+id/btnLogout"
