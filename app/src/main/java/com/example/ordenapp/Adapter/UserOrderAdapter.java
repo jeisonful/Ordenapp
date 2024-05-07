@@ -6,20 +6,12 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.ordenapp.Activity.DetailActivity;
 import com.example.ordenapp.Activity.OrderDetailActivity;
-import com.example.ordenapp.Domain.OrderDetails;
 import com.example.ordenapp.Domain.Orders;
 import com.example.ordenapp.R;
-
 import java.util.ArrayList;
 
 public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.ViewHolder> {

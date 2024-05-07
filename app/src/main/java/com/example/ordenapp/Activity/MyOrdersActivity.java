@@ -3,21 +3,11 @@ package com.example.ordenapp.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.ordenapp.Adapter.BestProductsAdapter;
-import com.example.ordenapp.Adapter.CategoryAdapter;
-import com.example.ordenapp.Adapter.ItemsOrderedAdapter;
 import com.example.ordenapp.Adapter.OrderHistoryAdapter;
 import com.example.ordenapp.Adapter.UserOrderAdapter;
-import com.example.ordenapp.Domain.Category;
-import com.example.ordenapp.Domain.OrderDetails;
 import com.example.ordenapp.Domain.Orders;
-import com.example.ordenapp.Domain.Products;
 import com.example.ordenapp.databinding.ActivityMyOrdersBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -75,20 +65,15 @@ public class MyOrdersActivity extends BaseActivity {
                         list.add(issue.getValue(Orders.class));
                     }
                     if (!list.isEmpty()) {
-
-
                         if(binding.textView6.getText().equals("Mi historial de órdenes")){
                             binding.historyOrdersView.setLayoutManager(new LinearLayoutManager(MyOrdersActivity.this, LinearLayoutManager.VERTICAL, false));
                             UserOrderAdapter adapter = new UserOrderAdapter(list);
                             binding.historyOrdersView.setAdapter(adapter);
-                            adapter.notifyDataSetChanged();
                         }else {
                             binding.historyOrdersView.setLayoutManager(new LinearLayoutManager(MyOrdersActivity.this, LinearLayoutManager.VERTICAL, false));
                             OrderHistoryAdapter adapter = new OrderHistoryAdapter(list);
                             binding.historyOrdersView.setAdapter(adapter);
-                            adapter.notifyDataSetChanged();
                         }
-
                     }
                     binding.progressBarOrderHistory.setVisibility(View.GONE);
                 }
