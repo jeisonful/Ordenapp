@@ -1,15 +1,11 @@
 package com.example.ordenapp.Domain;
 public class OrderDetails {
     private int Id;
-    private String UserID;
-    private int ItemsQuantity;
-    private String ShippingAddress;
-    private String Status;
-    private double Total;
-    private String DateTime;
+    private String Title;
+    private int Quantity;
 
-    public OrderDetails() {
-    }
+    private String ImagePath;
+    private double Price;
 
     public int getId() {
         return Id;
@@ -19,52 +15,40 @@ public class OrderDetails {
         Id = id;
     }
 
-    public String getUserID() {
-        return UserID;
+    public double getPrice() {
+        return Price;
     }
 
-    public void setUserID(String userID) {
-        UserID = userID;
+    public void setPrice(double price) {
+        Price = price;
     }
 
-    public int getItemsQuantity() {
-        return ItemsQuantity;
+    public String getImagePath() {
+        return ImagePath;
     }
 
-    public void setItemsQuantity(int itemsQuantity) {
-        ItemsQuantity = itemsQuantity;
+    public void setImagePath(String imagePath) {
+        ImagePath = imagePath;
     }
 
-    public String getShippingAddress() {
-        return ShippingAddress;
+    public String getTitle() {
+        return Title;
     }
 
-    public void setShippingAddress(String shippingAddress) {
-        ShippingAddress = shippingAddress;
+    public void setTitle(String title) {
+        Title = title;
     }
 
-    public String getStatus() {
-        return Status;
+    public int getQuantity() {
+        return Quantity;
     }
 
-    public void setStatus(String status) {
-        Status = status;
+    public void setQuantity(int quantity) {
+        Quantity = quantity;
     }
 
-    public double getTotal() {
-        return Total;
+    public OrderDetails() {
     }
 
-    public void setTotal(double total) {
-        Total = total;
-    }
-
-    public String getDateTime() {
-        return DateTime;
-    }
-
-    public void setDateTime(String dateTime) {
-        this.DateTime = dateTime;
-    }
 }
 

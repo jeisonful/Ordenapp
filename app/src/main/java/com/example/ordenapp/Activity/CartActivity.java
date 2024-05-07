@@ -44,6 +44,7 @@ private ManagmentCart managmentCart;
 
     private double tax;
     private double total;
+    private double itemTotal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +77,7 @@ private ManagmentCart managmentCart;
         int delivery = 25; // pesos DOP
         tax = (double) Math.round(managmentCart.getTotalFee() * percentTax * 100.0) /100;
         total = (double) Math.round((managmentCart.getTotalFee() + tax + delivery) * 100) /100;
-        double itemTotal = (double) Math.round(managmentCart.getTotalFee() * 100) /100;
+        itemTotal = (double) Math.round(managmentCart.getTotalFee() * 100) /100;
         binding.totalFeeTxt.setText("$" + itemTotal);
         binding.taxTxt.setText("$" + tax);
         binding.deliveryTxt.setText("$" + delivery);
@@ -87,14 +88,18 @@ private ManagmentCart managmentCart;
         binding.backBtn.setOnClickListener(v -> finish());
 
         binding.placeOrder.setOnClickListener(v -> {
-            saveOrderToFirebase();
-            managmentCart.clearCart();
-            finish();
-            startActivity(new Intent(CartActivity.this, CartActivity.class));
+            if(binding.shippingAddressTxt.getText().toString().isEmpty()){
+                binding.shippingAddressTxt.setHintTextColor(Color.RED);
+                binding.shippingAddressTxt.setHint("Dirección de envío obligatoria.");
+            }else{
+                saveOrderToFirebase();
+                managmentCart.clearCart();
+                finish();
+                startActivity(new Intent(CartActivity.this, CartActivity.class));
+            }
         });
     }
     private void saveOrderToFirebase() {
-        final int[] getTotalItems = {0};
         ArrayList<Products> productList = ((CartAdapter) adapter).getProductList();
         DatabaseReference ordersCounterRef = FirebaseDatabase.getInstance().getReferenceFromUrl("https://ordenapp-3184b-default-rtdb.firebaseio.com/ordersCounter");
         ordersCounterRef.runTransaction(new Transaction.Handler() {
@@ -103,7 +108,7 @@ private ManagmentCart managmentCart;
             public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
                 Long currentCount = mutableData.getValue(Long.class);
                 if (currentCount == null) {
-                    mutableData.setValue(0);
+                    mutableData.setValue(1);
                 } else {
                     mutableData.setValue(currentCount + 1);
                 }
@@ -120,35 +125,36 @@ private ManagmentCart managmentCart;
                 if (committed && dataSnapshot != null) {
                     Long orderCounter = dataSnapshot.getValue(Long.class);
                     if (orderCounter != null) {
-                        DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("Orders");
 
-                        for (int i = 0; i < productList.size(); i++) {
-                            Products product = productList.get(i);
-                            String orderId = ordersRef.push().getKey();
+                        DatabaseReference orderDetailsRef = FirebaseDatabase.getInstance().getReference("Orders").child(orderCounter.toString());
+                        DatabaseReference itemsRef = FirebaseDatabase.getInstance().getReference("OrderDetails");
 
-                            HashMap<String, Object> productData = new HashMap<>();
-                            productData.put("Id", orderCounter);
-                            productData.put("ProductID", product.getId());
-                            productData.put("Quantity", product.getNumberInCart());
-                            getTotalItems[0] += product.getNumberInCart();
-
-
-                            assert orderId != null;
-                            ordersRef.child(orderId).setValue(productData);
-                        }
-
-                        DatabaseReference orderDetailsRef = FirebaseDatabase.getInstance().getReference("OrderDetails").child(orderCounter.toString());
                         HashMap<String, Object> orderDetails = new HashMap<>();
                         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
                         String currentDateandTime = sdf.format(new Date());
                         orderDetails.put("Id", orderCounter);
                         orderDetails.put("UserID", currentFirebaseUser);
-                        orderDetails.put("ShippingAddress", "Testing");
+                        orderDetails.put("ShippingAddress", binding.shippingAddressTxt.getText().toString());
                         orderDetails.put("Status", "Pendiente");
-                        orderDetails.put("ItemsQuantity", getTotalItems[0]);
                         orderDetails.put("DateTime", currentDateandTime);
+                        orderDetails.put("Subtotal", itemTotal);
+                        orderDetails.put("Tax", tax);
                         orderDetails.put("Total", total);
                         orderDetailsRef.setValue(orderDetails);
+
+                        for (int i = 0; i < productList.size(); i++) {
+                            Products product = productList.get(i);
+
+                            HashMap<String, Object> productData = new HashMap<>();
+                            productData.put("Id", orderCounter);
+                            productData.put("Price", product.getPrice());
+                            productData.put("Title", product.getTitle());
+                            productData.put("ImagePath", product.getImagePath());
+                            productData.put("Quantity", product.getNumberInCart());
+
+                            itemsRef.push().setValue(productData);
+                        }
+
 
                         Toast.makeText(CartActivity.this, "Orden realizada correctamente", Toast.LENGTH_SHORT).show();
                     } else {

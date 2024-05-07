@@ -41,7 +41,7 @@
                     android:layout_marginStart="100dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:text="Historial de órdenes" />
+                    android:text="Mi historial de órdenes" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout

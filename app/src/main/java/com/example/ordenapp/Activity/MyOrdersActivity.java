@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ordenapp.Adapter.BestProductsAdapter;
 import com.example.ordenapp.Adapter.CategoryAdapter;
+import com.example.ordenapp.Adapter.ItemsOrderedAdapter;
 import com.example.ordenapp.Adapter.OrderHistoryAdapter;
 import com.example.ordenapp.Domain.Category;
 import com.example.ordenapp.Domain.OrderDetails;
+import com.example.ordenapp.Domain.Orders;
 import com.example.ordenapp.Domain.Products;
 import com.example.ordenapp.databinding.ActivityMyOrdersBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,30 +30,36 @@ import java.util.Objects;
 
 public class MyOrdersActivity extends BaseActivity {
     private ActivityMyOrdersBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMyOrdersBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+        setVariable();
         initMyOrders();
     }
 
+    private void setVariable() {
+        binding.btnBack.setOnClickListener(v -> finish());
+    }
+
     private void initMyOrders() {
-        DatabaseReference myRef = database.getReference("OrderDetails");
+        DatabaseReference myRef = database.getReference("Orders");
         binding.progressBarOrderHistory.setVisibility(View.VISIBLE);
-        ArrayList<OrderDetails> list = new ArrayList<>();
+        ArrayList<Orders> list = new ArrayList<>();
         Query query = myRef.orderByChild("UserID").equalTo(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot issue : snapshot.getChildren()) {
-                        list.add(issue.getValue(OrderDetails.class));
+                        list.add(issue.getValue(Orders.class));
                     }
                     if (!list.isEmpty()) {
                         binding.historyOrdersView.setLayoutManager(new LinearLayoutManager(MyOrdersActivity.this, LinearLayoutManager.VERTICAL, false));
-                        RecyclerView.Adapter<OrderHistoryAdapter.viewholder> adapter = new OrderHistoryAdapter(list);
+                        RecyclerView.Adapter<OrderHistoryAdapter.ViewHolder> adapter = new OrderHistoryAdapter(list);
                         binding.historyOrdersView.setAdapter(adapter);
                     }
                     binding.progressBarOrderHistory.setVisibility(View.GONE);
