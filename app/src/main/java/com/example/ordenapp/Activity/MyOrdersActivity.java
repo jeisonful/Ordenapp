@@ -13,6 +13,7 @@ import com.example.ordenapp.Adapter.BestProductsAdapter;
 import com.example.ordenapp.Adapter.CategoryAdapter;
 import com.example.ordenapp.Adapter.ItemsOrderedAdapter;
 import com.example.ordenapp.Adapter.OrderHistoryAdapter;
+import com.example.ordenapp.Adapter.UserOrderAdapter;
 import com.example.ordenapp.Domain.Category;
 import com.example.ordenapp.Domain.OrderDetails;
 import com.example.ordenapp.Domain.Orders;
@@ -40,27 +41,54 @@ public class MyOrdersActivity extends BaseActivity {
         setVariable();
         initMyOrders();
     }
-
     private void setVariable() {
         binding.btnBack.setOnClickListener(v -> finish());
     }
 
     private void initMyOrders() {
+        Query query;
         DatabaseReference myRef = database.getReference("Orders");
         binding.progressBarOrderHistory.setVisibility(View.VISIBLE);
         ArrayList<Orders> list = new ArrayList<>();
-        Query query = myRef.orderByChild("UserID").equalTo(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
+
+        if(Objects.equals(getIntent().getStringExtra("Status"), "pending")){
+            query = myRef.orderByChild("Status").equalTo("Pendiente");
+            binding.textView6.setText("Órdenes pendientes");
+        }else if(Objects.equals(getIntent().getStringExtra("Status"), "shipped")){
+            query = myRef.orderByChild("Status").equalTo("Enviada");
+            binding.textView6.setText("Órdenes enviadas");
+        }
+        else if(Objects.equals(getIntent().getStringExtra("Status"), "delivered")){
+            query = myRef.orderByChild("Status").equalTo("Entregada");
+            binding.textView6.setText("Órdenes entregadas");
+        }
+        else {
+            binding.textView6.setText("Mi historial de órdenes");
+            query = myRef.orderByChild("UserID").equalTo(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
+        }
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
+                    list.clear();
                     for (DataSnapshot issue : snapshot.getChildren()) {
                         list.add(issue.getValue(Orders.class));
                     }
                     if (!list.isEmpty()) {
-                        binding.historyOrdersView.setLayoutManager(new LinearLayoutManager(MyOrdersActivity.this, LinearLayoutManager.VERTICAL, false));
-                        RecyclerView.Adapter<OrderHistoryAdapter.ViewHolder> adapter = new OrderHistoryAdapter(list);
-                        binding.historyOrdersView.setAdapter(adapter);
+
+
+                        if(binding.textView6.getText().equals("Mi historial de órdenes")){
+                            binding.historyOrdersView.setLayoutManager(new LinearLayoutManager(MyOrdersActivity.this, LinearLayoutManager.VERTICAL, false));
+                            UserOrderAdapter adapter = new UserOrderAdapter(list);
+                            binding.historyOrdersView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                        }else {
+                            binding.historyOrdersView.setLayoutManager(new LinearLayoutManager(MyOrdersActivity.this, LinearLayoutManager.VERTICAL, false));
+                            OrderHistoryAdapter adapter = new OrderHistoryAdapter(list);
+                            binding.historyOrdersView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                        }
+
                     }
                     binding.progressBarOrderHistory.setVisibility(View.GONE);
                 }

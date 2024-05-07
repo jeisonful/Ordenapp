@@ -58,6 +58,18 @@
             app:layout_constraintStart_toStartOf="@id/statusTxt"
             app:layout_constraintTop_toBottomOf="@id/statusTxt" />
 
+        <TextView
+            android:id="@+id/btnEntregar"
+            android:layout_width="wrap_content"
+            android:drawableStart="@drawable/delivered"
+            android:background="@drawable/blue_button_background"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text=" Marcar entregada"
+            app:layout_constraintStart_toStartOf="@id/btnSeeDetails"
+            app:layout_constraintTop_toBottomOf="@id/btnSeeDetails" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
