@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -19,6 +20,11 @@ import com.example.ordenapp.R;
 import com.example.ordenapp.databinding.ActivityAdminBinding;
 import com.example.ordenapp.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
@@ -35,6 +41,67 @@ private ActivityAdminBinding binding;
         binding.userName.setText("Bienvenid@, "+Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName());
 
         setVariable();
+        getOrderCounter();
+        getCustomerCounter();
+        getProductCounter();
+    }
+
+    private void getProductCounter() {
+        DatabaseReference productCounterRef = FirebaseDatabase.getInstance().getReference("Product");
+        productCounterRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    long productCounterValue = dataSnapshot.getChildrenCount();
+                    if(productCounterValue >99){
+                        binding.productsCounter.setText("99+");
+                    }else{
+                        binding.productsCounter.setText(String.valueOf(productCounterValue));
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+    private void getCustomerCounter() {
+        DatabaseReference customerCounterRef = FirebaseDatabase.getInstance().getReference("User");
+        customerCounterRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    long customerCounterValue = dataSnapshot.getChildrenCount();
+                    if(customerCounterValue >99){
+                        binding.customersCounter.setText("99+");
+                    }else{
+                        binding.customersCounter.setText(String.valueOf(customerCounterValue));
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+    private void getOrderCounter() {
+        DatabaseReference orderCounterRef = FirebaseDatabase.getInstance().getReference("ordersCounter");
+        orderCounterRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    long orderCounterValue = dataSnapshot.getValue(Long.class);
+                    if(orderCounterValue >99){
+                        binding.orderCounter.setText("99+");
+                    }else{
+                        binding.orderCounter.setText(String.valueOf(orderCounterValue));
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     private void setVariable() {
@@ -64,7 +131,6 @@ private ActivityAdminBinding binding;
             intent.putExtra("Status", "shipped");
             startActivity(intent);
         });
-
         binding.btnOrders.setOnClickListener(v -> {
            if(binding.btnOrderDelivered.getVisibility() == View.GONE){
                binding.imgOrders.setVisibility(View.GONE);
@@ -80,8 +146,8 @@ private ActivityAdminBinding binding;
                binding.btnOrderShipped.setVisibility(View.GONE);
            }
         });
+
         binding.btnProducts.setOnClickListener(v -> {
-            Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
 
             if(binding.btnAgregarProducto.getVisibility()==View.GONE){
                 binding.btnVerProductos.setVisibility(View.VISIBLE);
@@ -96,19 +162,14 @@ private ActivityAdminBinding binding;
                 binding.productosTxt.setVisibility(View.VISIBLE);
             }
         });
-        binding.btnCustomers.setOnClickListener(v -> {
-            Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
-        });
-        binding.btnCategories.setOnClickListener(v -> {
-            Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
-        });
-
-
         binding.btnAgregarProducto.setOnClickListener(v -> {
-            Toast.makeText(this, "Estoy agregando productos", Toast.LENGTH_SHORT).show();
         });
         binding.btnVerProductos.setOnClickListener(v -> {
-            Toast.makeText(this, "Estoy viendo productos", Toast.LENGTH_SHORT).show();
+        });
+
+        binding.btnCustomers.setOnClickListener(v -> {
+        });
+        binding.btnCategories.setOnClickListener(v -> {
         });
     }
 }
