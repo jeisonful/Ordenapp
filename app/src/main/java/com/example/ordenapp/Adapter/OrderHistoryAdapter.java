@@ -169,7 +169,6 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         .addOnFailureListener(e -> {
                             Toast.makeText(context, "Error al marcar la orden como enviada", Toast.LENGTH_SHORT).show();
                         });
-                notifyDataSetChanged();
             });
         }
     }
