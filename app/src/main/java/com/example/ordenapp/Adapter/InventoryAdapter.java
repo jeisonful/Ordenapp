@@ -78,7 +78,6 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.view
         });
 
     }
-
     private void openTransactionDialog(Products products) {
         DialogPlus dialog = DialogPlus.newDialog(context)
                 .setContentHolder(new ViewHolder(R.layout.transaction_popup))
@@ -118,6 +117,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.view
             } else if(Integer.parseInt(unitsTxt) > Integer.parseInt(String.valueOf(products.getUnitsInStock()))
                     && "Salida".equals(spinnerTransactions.getSelectedItem().toString())){
                 Toast.makeText(context, "No hay suficientes unidades disponibles para esta transferencia", Toast.LENGTH_SHORT).show();
+            }else if(Integer.parseInt(unitsTxt)<=0){
+                Toast.makeText(context, "La cantidad de unidades no es válida", Toast.LENGTH_SHORT).show();
             }
             else{
                 Map<String, Object> ajustesMap = new HashMap<>();
@@ -170,8 +171,6 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.view
         });
 
     }
-
-
     private void openEditDialog(Products products) {
         DialogPlus dialog = DialogPlus.newDialog(context)
                 .setContentHolder(new ViewHolder(R.layout.update_product))
