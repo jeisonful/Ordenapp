@@ -9,11 +9,20 @@ public class Products implements Serializable {
     private int Id;
     private double Price;
     private String ImagePath;
+    private int UnitsInStock;
     private double Star;
     private String Title;
     private int numberInCart;
 
     public Products() {
+    }
+
+    public int getUnitsInStock() {
+        return UnitsInStock;
+    }
+
+    public void setUnitsInStock(int unitsInStock) {
+        UnitsInStock = unitsInStock;
     }
 
     @Override

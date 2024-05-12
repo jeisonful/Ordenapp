@@ -167,6 +167,8 @@ private ActivityAdminBinding binding;
             startActivity(intent);
         });
         binding.btnGestionar.setOnClickListener(v -> {
+            Intent intent = new Intent(AdminActivity.this, InventoryActivity.class);
+            startActivity(intent);
         });
 
         binding.btnCustomers.setOnClickListener(v -> {

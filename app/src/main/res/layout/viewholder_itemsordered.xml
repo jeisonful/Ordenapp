@@ -25,62 +25,69 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
 
-        <TextView
-            android:id="@+id/titleTxt"
+        <LinearLayout
             android:layout_width="wrap_content"
+            android:id="@+id/linear1"
             android:layout_height="wrap_content"
-            android:text="TITLE"
-            android:textColor="#bdbdbd"
-            android:textSize="14sp"
-            android:textStyle="normal"
+            android:orientation="horizontal"
             app:layout_constraintStart_toEndOf="@id/pic"
-            app:layout_constraintTop_toTopOf="@id/pic" />
-        <TextView
-            android:id="@+id/textView1"
+            app:layout_constraintTop_toTopOf="@id/pic">
+
+            <TextView
+                android:id="@+id/titleTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TITLE"
+                android:textColor="#bdbdbd"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cantidad: "
-            android:textColor="#bdbdbd"
-            android:textSize="14sp"
-            android:textStyle="normal"
+            android:orientation="horizontal"
             app:layout_constraintStart_toEndOf="@id/pic"
-            app:layout_constraintTop_toBottomOf="@id/titleTxt"/>
-        <TextView
-            android:id="@+id/quantityTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/linear1">
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cantidad: "
+                android:textColor="#bdbdbd"
+                android:textSize="14sp"
+                android:textStyle="normal" />
 
-            android:layout_marginTop="36dp"
-            android:text="1"
-            android:textColor="#bdbdbd"
-            android:textSize="14sp"
-            android:textStyle="normal"
-            app:layout_constraintStart_toEndOf="@id/textView1"
-            app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text=" | "
-            android:textColor="#bdbdbd"
-            android:textSize="18sp"
-            android:textStyle="normal"
-            app:layout_constraintStart_toEndOf="@id/quantityTxt"
-            app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:id="@+id/priceTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:text=" $"
-            android:textColor="#bdbdbd"
-            android:textSize="14sp"
-            android:textStyle="normal"
-            app:layout_constraintStart_toEndOf="@id/textView2"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/quantityTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textColor="#bdbdbd"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" | "
+                android:textColor="#bdbdbd"
+                android:textSize="18sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/priceTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" $"
+                android:textColor="#bdbdbd"
+                android:textSize="14sp"
+                android:textStyle="normal" />
 
 
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

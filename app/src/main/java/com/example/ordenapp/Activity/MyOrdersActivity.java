@@ -17,6 +17,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 public class MyOrdersActivity extends BaseActivity {
@@ -64,6 +65,7 @@ public class MyOrdersActivity extends BaseActivity {
                     for (DataSnapshot issue : snapshot.getChildren()) {
                         list.add(issue.getValue(Orders.class));
                     }
+                    Collections.reverse(list);
                     if (!list.isEmpty()) {
                         if(binding.textView6.getText().equals("Mi historial de órdenes")){
                             binding.historyOrdersView.setLayoutManager(new LinearLayoutManager(MyOrdersActivity.this, LinearLayoutManager.VERTICAL, false));
