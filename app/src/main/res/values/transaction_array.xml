@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="best_product_array">
+        <item>Tipo de transacción</item>
+        <item>Entrada</item>
+        <item>Salida</item>
+    </string-array>
+</resources>

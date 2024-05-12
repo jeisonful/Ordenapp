@@ -45,4 +45,6 @@ dependencies {
     implementation libs.gson
     implementation libs.firebase.auth
     implementation libs.glide
+    implementation libs.dialogplus.v111
+
 }

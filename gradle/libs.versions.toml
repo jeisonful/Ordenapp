@@ -1,5 +1,7 @@
 [versions]
 agp = "8.3.2"
+dialogplus = "1.12"
+dialogplusVersion = "1.11"
 firebaseAuth = "22.3.1"
 glide = "4.16.0"
 gson = "2.10.1"
@@ -12,8 +14,11 @@ activity = "1.8.0"
 constraintlayout = "2.1.4"
 googleServices = "4.4.1"
 firebaseDatabase = "20.3.1"
+recyclerviewV7 = "28.0.0"
 
 [libraries]
+dialogplus = { module = "com.orhanobut:dialogplus", version.ref = "dialogplus" }
+dialogplus-v111 = { module = "com.orhanobut:dialogplus", version.ref = "dialogplusVersion" }
 firebase-auth = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuth" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
@@ -26,6 +31,7 @@ activity = { group = "androidx.activity", name = "activity", version.ref = "acti
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
+recyclerview-v7 = { module = "com.android.support:recyclerview-v7", version.ref = "recyclerviewV7" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

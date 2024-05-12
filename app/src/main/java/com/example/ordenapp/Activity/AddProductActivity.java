@@ -73,28 +73,28 @@ public class AddProductActivity extends BaseActivity {
 
                 int selectedPosition = binding.spinnerCategories.getSelectedItemPosition();
                 switch (selectedPosition) {
-                    case 0:
+                    case 1:
                         CategoryId = 0; // Bebidas
                         break;
-                    case 1:
+                    case 2:
                         CategoryId = 1; // Lácteos
                         break;
-                    case 2:
+                    case 3:
                         CategoryId = 2; // Frutas y Verduras
                         break;
-                    case 3:
+                    case 4:
                         CategoryId = 3; // Panadería
                         break;
-                    case 4:
+                    case 5:
                         CategoryId = 4; // Limpieza
                         break;
-                    case 5:
+                    case 6:
                         CategoryId = 5; // Baño
                         break;
-                    case 6:
+                    case 7:
                         CategoryId = 6; // Embutidos
                         break;
-                    case 7:
+                    case 8:
                         CategoryId = 7; // Más
                         break;
                 }
