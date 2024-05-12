@@ -105,7 +105,7 @@ private ActivityAdminBinding binding;
     }
 
     private void setVariable() {
-        binding.btnVerProductos.setVisibility(View.GONE);
+        binding.btnGestionar.setVisibility(View.GONE);
         binding.btnAgregarProducto.setVisibility(View.GONE);
         binding.imgProductos.setVisibility(View.VISIBLE);
         binding.productosTxt.setVisibility(View.VISIBLE);
@@ -150,21 +150,23 @@ private ActivityAdminBinding binding;
         binding.btnProducts.setOnClickListener(v -> {
 
             if(binding.btnAgregarProducto.getVisibility()==View.GONE){
-                binding.btnVerProductos.setVisibility(View.VISIBLE);
+                binding.btnGestionar.setVisibility(View.VISIBLE);
                 binding.btnAgregarProducto.setVisibility(View.VISIBLE);
                 binding.imgProductos.setVisibility(View.GONE);
                 binding.productosTxt.setVisibility(View.GONE);
 
             }else {
-                binding.btnVerProductos.setVisibility(View.GONE);
+                binding.btnGestionar.setVisibility(View.GONE);
                 binding.btnAgregarProducto.setVisibility(View.GONE);
                 binding.imgProductos.setVisibility(View.VISIBLE);
                 binding.productosTxt.setVisibility(View.VISIBLE);
             }
         });
         binding.btnAgregarProducto.setOnClickListener(v -> {
+            Intent intent = new Intent(AdminActivity.this, AddProductActivity.class);
+            startActivity(intent);
         });
-        binding.btnVerProductos.setOnClickListener(v -> {
+        binding.btnGestionar.setOnClickListener(v -> {
         });
 
         binding.btnCustomers.setOnClickListener(v -> {

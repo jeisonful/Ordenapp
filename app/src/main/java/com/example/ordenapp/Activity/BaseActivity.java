@@ -14,6 +14,7 @@ public class BaseActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseDatabase database;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://ordenapp-3184b-default-rtdb.firebaseio.com");
+    DatabaseReference productList = FirebaseDatabase.getInstance().getReferenceFromUrl("https://ordenapp-3184b-default-rtdb.firebaseio.com/Product");
     String currentFirebaseUser = FirebaseAuth.getInstance().getUid();
     public String TAG = "Ordenapp";
     @Override

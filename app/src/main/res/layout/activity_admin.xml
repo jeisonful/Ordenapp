@@ -85,12 +85,12 @@
                     android:layout_marginTop="20dp"
                     android:textColor="@color/white" />
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnVerProductos"
+                    android:id="@+id/btnGestionar"
                     style="@android:style/Widget.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/blue_button_background2"
-                    android:text="Ver"
+                    android:text="Gestionar"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="75dp"
                     android:textColor="@color/white" />
@@ -102,7 +102,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="35dp"
                     android:textStyle="bold"
-                    android:text="Productos" />
+                    android:text="Inventario" />
 
             </androidx.cardview.widget.CardView>
 
