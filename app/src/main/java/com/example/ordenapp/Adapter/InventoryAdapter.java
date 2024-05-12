@@ -31,13 +31,19 @@ import com.google.firebase.database.ValueEventListener;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.viewholder> {
     ArrayList<Products> items;
     Context context;
+
+    public static int newStock = 0;
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://ordenapp-3184b-default-rtdb.firebaseio.com/");
 
     public InventoryAdapter(ArrayList<Products> items) {
         this.items = items;
@@ -67,14 +73,104 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.view
             openEditDialog(items.get(position));
         });
 
-        holder.btnEntrada.setOnClickListener(v -> {
-
+        holder.btnTransferencia.setOnClickListener(v -> {
+            openTransactionDialog(items.get(position));
         });
 
-        holder.btnSalida.setOnClickListener(v -> {
-
-        });
     }
+
+    private void openTransactionDialog(Products products) {
+        DialogPlus dialog = DialogPlus.newDialog(context)
+                .setContentHolder(new ViewHolder(R.layout.transaction_popup))
+                .setExpanded(true,1200)
+                .create();
+
+        View view = dialog.getHolderView();
+        Spinner spinnerTransactions = view.findViewById(R.id.spinner_transaction);
+        EditText txtUnits = view.findViewById(R.id.txtUnits);
+        EditText txtId = view.findViewById(R.id.txtId);
+        EditText txtConcepto = view.findViewById(R.id.txtConcepto);
+        Button btnOk = view.findViewById(R.id.btnOk);
+        Button btnCancelar = view.findViewById(R.id.btnCancelar);
+
+        txtId.setText("ID: "+products.getId());
+
+        ArrayAdapter<CharSequence> transactionAdapter = ArrayAdapter.createFromResource(context,
+                R.array.transaction_array, android.R.layout.simple_spinner_item);
+        transactionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerTransactions.setAdapter(transactionAdapter);
+        dialog.show();
+
+        btnCancelar.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+        btnOk.setOnClickListener(v -> {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy, hh:mm:ss a", Locale.getDefault());
+            final String unitsTxt = txtUnits.getText().toString();
+            final String conceptoTxt = txtConcepto.getText().toString();
+            final String txtFecha = sdf.format(new Date());
+
+            if ("Tipo de transacción".equals(spinnerTransactions.getSelectedItem().toString())
+                    || unitsTxt.isEmpty()
+                    || conceptoTxt.isEmpty()) {
+                Toast.makeText(context, "Debes llenar todos los campos", Toast.LENGTH_SHORT).show();
+            } else if(Integer.parseInt(unitsTxt) > Integer.parseInt(String.valueOf(products.getUnitsInStock()))
+                    && "Salida".equals(spinnerTransactions.getSelectedItem().toString())){
+                Toast.makeText(context, "No hay suficientes unidades disponibles para esta transferencia", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Map<String, Object> ajustesMap = new HashMap<>();
+                ajustesMap.put("ProductId", products.getId());
+                ajustesMap.put("Units", unitsTxt);
+                ajustesMap.put("Comment", conceptoTxt);
+                ajustesMap.put("Date", txtFecha);
+                ajustesMap.put("TransactionType", spinnerTransactions.getSelectedItem().toString());
+
+
+
+                databaseReference.child("Transactions").push().setValue(ajustesMap)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                            @Override
+                            public void onSuccess(Void unused) {
+                                if("Entrada".equals(spinnerTransactions.getSelectedItem().toString())){
+                                    newStock = Integer.parseInt(unitsTxt) + Integer.parseInt(String.valueOf(products.getUnitsInStock()));
+                                }else{
+                                    newStock = Integer.parseInt(String.valueOf(products.getUnitsInStock())) - Integer.parseInt(unitsTxt);
+                                }
+                                Map<String, Object> productosMap = new HashMap<>();
+                                productosMap.put("UnitsInStock", newStock);
+
+                                FirebaseDatabase.getInstance().getReference().child("Product")
+                                        .child(String.valueOf(products.getId())).updateChildren(productosMap)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                Toast.makeText(context, "Transferencia realizada correctamente.", Toast.LENGTH_SHORT).show();
+                                                dialog.dismiss();
+                                                updateProductsFromDatabase();
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(context, "No se ha podido realizar la transferencia.", Toast.LENGTH_LONG).show();
+                                                dialog.dismiss();
+                                            }
+                                        });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(context, "No se ha podido realizar la transferencia.", Toast.LENGTH_LONG).show();
+                                dialog.dismiss();
+                            }
+                        });
+            }
+        });
+
+    }
+
 
     private void openEditDialog(Products products) {
         DialogPlus dialog = DialogPlus.newDialog(context)
@@ -211,7 +307,6 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.view
 
         });
 
-
     }
 
     @Override
@@ -243,7 +338,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.view
 
     public class viewholder extends RecyclerView.ViewHolder {
         TextView titleTxt, priceTxt, unitsTxt, txtId;
-        Button btnEditar, btnEntrada, btnSalida;
+        Button btnEditar, btnTransferencia;
         ImageView pic;
 
         public viewholder(@NonNull View itemView) {
@@ -254,8 +349,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.view
             priceTxt = itemView.findViewById(R.id.priceTxt);
             pic = itemView.findViewById(R.id.img);
             btnEditar = itemView.findViewById(R.id.btnEditar);
-            btnEntrada = itemView.findViewById(R.id.btnEntrada);
-            btnSalida = itemView.findViewById(R.id.btnSalida);
+            btnTransferencia = itemView.findViewById(R.id.btnTransferencia);
         }
     }
 }

@@ -104,26 +104,15 @@
                     android:text="Editar"
                     android:textColor="@color/white" />
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnEntrada"
+                    android:id="@+id/btnTransferencia"
                     style="@android:style/Widget.Button"
                     android:layout_width="wrap_content"
                     android:layout_marginStart="5dp"
                     android:padding="5dp"
-                    android:drawableStart="@drawable/ic_import"
+                    android:drawableStart="@drawable/ic_transaction"
                     android:layout_height="wrap_content"
                     android:background="@drawable/blue_button_background"
-                    android:text="Entrada"
-                    android:textColor="@color/white" />
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnSalida"
-                    style="@android:style/Widget.Button"
-                    android:layout_marginStart="5dp"
-                    android:layout_width="wrap_content"
-                    android:padding="5dp"
-                    android:drawableStart="@drawable/ic_export"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/blue_button_background"
-                    android:text="Salida"
+                    android:text="Transferir"
                     android:textColor="@color/white" />
 
             </LinearLayout>
