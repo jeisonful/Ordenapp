@@ -1,53 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/motionLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    app:layoutDescription="@xml/activity_intro_scene"
     tools:context=".Activity.IntroActivity">
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="wrap_content"
-        android:layout_height="400dp"
-        android:layout_marginTop="400dp"
-        android:layout_x="0dp"
-        android:layout_y="420dp"
-        android:background="@color/blue"
-        tools:layout_editor_absoluteX="2dp" />
-
-    <TextView
-        android:id="@+id/btnRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_x="15dp"
-        android:layout_y="655dp"
-        android:text="Registrarme"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_x="270dp"
-        android:layout_y="655dp"
-        android:text="Iniciar Sesión"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/welcomeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_x="80dp"
-        android:layout_y="469dp"
-        android:textStyle="bold"
-        android:text="Bienvenid@ a Ordenapp"
-        android:textColor="@color/white"
-        android:textSize="25sp" />
-</AbsoluteLayout>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:srcCompat="@mipmap/intro_icon"
+        tools:layout_editor_absoluteX="-73dp"
+        tools:layout_editor_absoluteY="290dp" />
+</androidx.constraintlayout.motion.widget.MotionLayout>
