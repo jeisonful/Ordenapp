@@ -33,7 +33,7 @@ ActivityIntroBinding binding;
                     startActivity(new Intent(IntroActivity.this, LoginActivity.class));
                 }
             }
-        }, 2500);
+        }, 4000);
 
 
 
