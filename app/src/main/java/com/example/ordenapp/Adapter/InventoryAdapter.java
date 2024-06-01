@@ -128,8 +128,6 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.view
                 ajustesMap.put("Date", txtFecha);
                 ajustesMap.put("TransactionType", spinnerTransactions.getSelectedItem().toString());
 
-
-
                 databaseReference.child("Transactions").push().setValue(ajustesMap)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
 
