@@ -34,7 +34,9 @@ private ActivityMainBinding binding;
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        getWindow().getDecorView().setBackgroundColor(Color.WHITE);
+        String colorHtml = "#E0FFFF"; // Aquí puedes usar cualquier color HTML
+        int color = Color.parseColor(colorHtml);
+        getWindow().getDecorView().setBackgroundColor(color);
         binding.userLoggedName.setText(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName());
         getUserData();
         initBestProduct();
